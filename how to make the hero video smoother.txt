@@ -1,0 +1,3 @@
+when using gsap scroll trigger on video, it basically running a keyframes per scroll, but normal video doesn't have many keyframes, so we use the ffmpeg to make it happen.
+command:
+ffmpeg -i input.mp4 -vg scale=960:-1 -movflags faststart -vcodec libx264 -crf 20 -g 1 -pix_fmt yuv420p output.mp4
