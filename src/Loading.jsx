@@ -69,7 +69,7 @@ const Loading = ({ onComplete }) => {
       id="loader"
       className="text-5xl col-center abs-center gap-10 pointer-events-none"
     >
-      <img id="logo" src="/images/fav.png" className="size-32" />
+      <img id="logo" src="/images/fav.webp" className="size-32" />
 
       <div
         id="loader-bg"

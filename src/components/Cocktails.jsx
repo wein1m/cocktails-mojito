@@ -20,12 +20,12 @@ const Cocktails = () => {
   return (
     <section id="cocktails" className="noisy">
       <img
-        src="/images/cocktail-left-leaf.png"
+        src="/images/cocktail-left-leaf.webp"
         alt="left-leaf"
         id="c-left-leaf"
       />
       <img
-        src="/images/cocktail-right-leaf.png"
+        src="/images/cocktail-right-leaf.webp"
         alt="right-leaf"
         id="c-right-leaf"
       />

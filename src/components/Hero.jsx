@@ -68,12 +68,12 @@ const Hero = () => {
       <section id="hero" className="noisy">
         <h1 className="title">Mojito</h1>
         <img
-          src="/images/hero-left-leaf.png"
+          src="/images/hero-left-leaf.webp"
           alt="left-leaf"
           className="left-leaf"
         />
         <img
-          src="/images/hero-right-leaf.png"
+          src="/images/hero-right-leaf.webp"
           alt="right-leaf"
           className="right-leaf"
         />
