@@ -1,35 +1,59 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { sliderLists } from "../constants/index";
+import { allCocktails } from "../constants/index";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 const Menu = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isRight, setIsRight] = useState(false);
+
   const contentRef = useRef();
 
   useGSAP(() => {
     gsap.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 1 });
     gsap.fromTo(
       ".cocktail img",
-      { opacity: 0, xPercent: -100 },
-      { opacity: 1, xPercent: 0, duration: 1, ease: "power1.inOut" }
+      { opacity: 0, xPercent: isRight ? 100 : -100 },
+      { opacity: 1, xPercent: 0, duration: 1, ease: "back.out" }
     );
-    gsap.fromTo(".details h2", { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, ease: "power1.inOut" })
-    gsap.fromTo(".details p", { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, ease: "power1.inOut" })
+    gsap.fromTo(
+      ".details h2",
+      { yPercent: 30, opacity: 0 },
+      { yPercent: 0, opacity: 1, ease: "power1.inOut", delay: 0.1 }
+    );
+    gsap.fromTo(
+      ".details p",
+      { yPercent: 30, opacity: 0,  },
+      { yPercent: 0, opacity: 1, ease: "power1.inOut", delay: 0.1 }
+    );
   }, [currentIndex]);
 
-  const totalCocktails = sliderLists.length;
-  const goToSlide = (index) => {
-    const newIndex = (index + totalCocktails) % totalCocktails;
+  useGSAP(() => {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#menu",
+          start: "top center",
+          scrub: true,
+        },
+      })
+      .to("#m-right-leaf", { y: 200 }, 0)
+      .to("#m-left-leaf", { y: -200 }, "<"); // animate at the same time as the right leaf
+  })
 
+  const totalCocktails = allCocktails.length;
+  const goToSlide = (index, right) => {
+    const newIndex = (index + totalCocktails) % totalCocktails;
     setCurrentIndex(newIndex);
-    console.log(index);
+
+    setIsRight(right ? true : false);
+    console.log(isRight);
   };
 
   const getCocktailAt = (indexOffset) => {
-    return sliderLists[
+    return allCocktails[
       (currentIndex + indexOffset + totalCocktails) % totalCocktails
     ];
   };
@@ -51,12 +75,12 @@ const Menu = () => {
         id="m-right-leaf"
       />
 
-      <h2 id="menu-heading" className="sr-only">
+      <h2 id="menu-heading" className="title">
         Cocktail Menu
       </h2>
 
       <nav className="cocktail-tabs" aria-label="cocktail-navigation">
-        {sliderLists.map((cocktail, index) => {
+        {allCocktails.map((cocktail, index) => {
           const isActive = index === currentIndex;
 
           return (
@@ -65,8 +89,9 @@ const Menu = () => {
               className={`${
                 isActive
                   ? "text-white border-white"
-                  : "text-white/50 border-white/50"
-              }`}
+                  : "text-white/30 border-white/30"
+              }
+              md:text-3xl text-xl pb-2 cursor-pointer hover:text-yellow hover:border-yellow border-b-1 transition-colors font-modern-negra`}
               onClick={() => goToSlide(index)}
             >
               {cocktail.name}
@@ -84,14 +109,14 @@ const Menu = () => {
             <span>{prevCocktail.name}</span>
             <img
               src="/images/left-arrow.png"
-              alt="right-arrow"
+              alt="left-arrow"
               aria-hidden="true"
             />
           </button>
 
           <button
             className="text-left"
-            onClick={() => goToSlide(currentIndex + 1)}
+            onClick={() => goToSlide(currentIndex + 1, true)}
           >
             <span>{nextCocktail.name}</span>
             <img

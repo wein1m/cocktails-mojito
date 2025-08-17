@@ -26,8 +26,17 @@ const Contact = () => {
         yPercent: 100,
         stagger: 0.02,
       })
-      .to("#f-right-leaf", { y: 50, duration: 1, ease: "power1.inOut" })
-      .to("#f-left-leaf", { y: 50, duration: 1, ease: "power1.inOut" }, "<"); // animate at the same time as the right leaf
+
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#contact",
+          start: "top center",
+          scrub: true,
+        },
+      })
+      .to("#f-right-leaf", { y: -200 }, 0)
+      .to("#f-left-leaf", { y: 200 }, "<"); // animate at the same time as the right leaf
   });
 
   return (

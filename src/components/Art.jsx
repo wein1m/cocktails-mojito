@@ -13,7 +13,7 @@ const Art = () => {
       scrollTrigger: {
         trigger: "#art",
         start: start,
-        end: "bottom center",
+        end: `${isMobile ? "+=2000" : "+=3000"}`,
         scrub: 1.5, // the animation will follow the scroll, but with 1.5s delay
         pin: true,
       },
@@ -29,7 +29,7 @@ const Art = () => {
         scale: 1.5,
         maskPosition: "center",
         maskSize: "400%",
-        duration: 1,
+        duration: 5,
         ease: "power1.inOut",
       })
       .to("#masked-content", {
