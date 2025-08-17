@@ -25,6 +25,30 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #2d2d32 transparent;
+}
+
+html::-webkit-scrollbar {
+  height: 5px; /* scrollbar thickness */
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent; /* track background */
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #2d2d32; /* thumb color */
+  border-radius: 9999px; /* full rounded */
+  min-width: 10px; /* thumb min width */
+}
+
+html::-webkit-scrollbar-button {
+  /* Remove the scroll buttons in WebKit browsers */
+  display: none;
+}
+
 @utility flex-center {
   @apply flex justify-center items-center;
 }
