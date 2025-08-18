@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 
-const Loading = ({ onComplete }) => {
+const Loading = () => {
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
@@ -30,39 +30,17 @@ const Loading = ({ onComplete }) => {
     );
 
     // Fake smooth progress (0 → ~80%)
-    const fakeTween = gsap.timeline({ ease: "power1.inOut " });
-    fakeTween
-      .to("#loader-fg", { scaleX: 0.2, duration: 3, ease: "power1.inOut" })
+    tl.to("#loader-fg", { scaleX: 0.2, duration: 3, ease: "power1.inOut" })
       .to("#loader-fg", { scaleX: 0.5, duration: 2, ease: "power1.inOut" })
-      .to("#loader-fg", { scaleX: 0.8, duration: 2, ease: "power1.inOut" });
+      .to("#loader-fg", { scaleX: 0.8, duration: 2, ease: "power1.inOut" })
+      .to("#loader-fg", { scaleX: 1, duration: 4, ease: "power1.inOut" });
 
-    // Real "all assets loaded" event
-    const handleLoad = () => {
-      fakeTween.kill(); // stop fake tween if running
-      gsap.to("#loader-fg", {
-        scaleX: 1,
-        duration: 0.8,
-        ease: "power1.out",
-        onComplete: () => {
-          gsap.to("#loader", {
-            opacity: 0,
-            duration: 0.8,
-            delay: 0.3,
-            onComplete,
-          });
-        },
-      });
-    };
-
-    // If assets are already loaded (cached), skip straight to 100%
-    if (document.readyState === "complete") {
-      handleLoad();
-    } else {
-      window.addEventListener("load", handleLoad);
-    }
-
-    return () => window.removeEventListener("load", handleLoad);
-  }, [onComplete]);
+    tl.to("#loader", {
+      opacity: 0,
+      duration: 0.8,
+      delay: 0.3,
+    });
+  }, []);
 
   return (
     <div

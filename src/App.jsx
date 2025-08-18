@@ -1,8 +1,7 @@
-// App.jsx
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 import { ReactLenis } from "lenis/react";
-import { useState } from "react";
+import { Suspense } from "react";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -16,22 +15,20 @@ import Loading from "./Loading";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  return !isLoading ? (
-    <main className="scroll-container lenis lenis-scrolling">
-      <ReactLenis root />
-      <Navbar />
-      <Hero />
-      <Cocktails />
-      <About />
-      <Art />
-      <Menu />
-      <Contact />
-    </main>
-  ) : (
-    <Loading onComplete={() => setIsLoading(false)} />
-  );
+  return (
+    <Suspense fallback={<Loading />}>
+      <main className="scroll-container lenis lenis-scrolling">
+        <ReactLenis root />
+        <Navbar />
+        <Hero />
+        <Cocktails />
+        <About />
+        <Art />
+        <Menu />
+        <Contact />
+      </main>
+    </Suspense>
+  )
 };
 
 export default App;
