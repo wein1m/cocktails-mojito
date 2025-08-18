@@ -3,8 +3,10 @@ import gsap from "gsap";
 import { SplitText } from "gsap/all";
 import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
+import { preloadVideo } from "@remotion/preload";
 
 const Hero = () => {
+  preloadVideo("/videos/output.mp4")
   const videoRef = useRef();
 
   // if it's more than 767px then it's not mobile.
@@ -53,7 +55,7 @@ const Hero = () => {
         start: startValue,
         end: endValue,
         scrub: true,
-        pin: true
+        pin: true,
       },
     });
 
@@ -62,7 +64,8 @@ const Hero = () => {
         currentTime: videoRef.current.duration,
       });
     };
-  }, []);
+  }, [isMobile]);
+
   return (
     <>
       <section id="hero" className="noisy">
@@ -104,7 +107,7 @@ const Hero = () => {
           ref={videoRef}
           muted
           playsInline
-          preload="auto"
+          preload=""
           src="/videos/output.mp4"
         />
       </div>
